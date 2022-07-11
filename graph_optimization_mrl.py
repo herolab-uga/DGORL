@@ -16,6 +16,7 @@ import os
 
 import argparse
 
+# set arguments for optimizer
 parser = argparse.ArgumentParser()
 parser.add_argument('-n', '--max_iterations', type=int, default=100, help='perform n iterations')
 parser.add_argument('-i', '--input', type=str, default='graph.g2o', help='input file')
@@ -46,6 +47,11 @@ window = 4
 threshold = 0.05
 INFO_SHARING = True
 initial_pos = [(0,0,0) for k in range(No_Of_Robots)]
+
+text=[]
+total_overall_rss=[]
+total_original_tragectory=[]
+
 colors = ['b','r','c','y','k','m']
 for r in range(No_Of_Robots):
     initial_pos[r]=(random.choice(possible_value),random.choice(possible_value),random.choice(list(np.arange(-1.5,1.5,0.1))))
@@ -74,10 +80,7 @@ def gen_wifi(freq=2.4, power=20, trans_gain=0, recv_gain=0, size=areaSize, pos=(
     return rss
 
 
-text=[]
-total_overall_rss=[]
-total_original_tragectory=[]
-
+# motion model with delta time 0f 0.5 sec
 DT = 0.5
 def motion_model(x,u):
     F = np.array([[1.0, 0, 0],
@@ -92,6 +95,7 @@ def motion_model(x,u):
 
     return xd
 
+#plot initialization
 plt.ion()
 figure, axis = plt.subplots(1, 2)
 axis[0].set_title("Trajectory",fontsize=24)
@@ -117,19 +121,21 @@ predicted_pos = initial_pos
 perceived_weight = [1 for k in range(No_Of_Robots)]
 Predicted_Previous_pos = [(0,0) for k in range(No_Of_Robots)]
 start_time = time.time()
+# possible instances for each robot at time t
 for r in range(No_Of_Robots):
     particles=[]
     for pts in range(num_particles):
         particles.append((random.choice(possible_value),random.choice(possible_value)))
     total_particles.append(particles)
 
-
+# initialized estimated relative position graph ERPMG
 graph = [[0]*No_Of_Robots]*No_Of_Robots
 
 doas=[]
 for i in range(No_Of_Iterations):
     overall_rss = []
     overal_trajectory = []
+    # simulate random motion of robots in bounded region
     for ri in range(No_Of_Robots):
         if i == 0:
             x,y,w = initial_pos[ri]
@@ -150,6 +156,7 @@ for i in range(No_Of_Iterations):
             overall_rss.append(rss)
     total_original_tragectory.append(overal_trajectory)
     total_overall_rss.append(overall_rss)
+    # clear graph at every iteration
     axis[1].cla()
     axis[1].set_title("Graph",fontsize=24)
     plt.axis("equal")
@@ -163,6 +170,7 @@ for i in range(No_Of_Iterations):
     axis[1].tick_params(axis='y', labelsize=20)
     for r in range(No_Of_Robots):
         current_pos_r = total_original_tragectory[i][r]
+        # find distance from RSSI and populate graph
         for r1 in range(No_Of_Robots):
             if r != r1:
                 current_pos_r1 = total_original_tragectory[i][r1]
@@ -172,14 +180,14 @@ for i in range(No_Of_Iterations):
                 axis[1].add_artist(plt.Circle((current_pos_r[0],current_pos_r[1] ), radius=2, color=colors[r] ))
                 axis[1].text(current_pos_r[0],current_pos_r[1], str(r), fontsize = 12,color='w')
                 axis[1].plot([current_pos_r[0],current_pos_r1[0]],[current_pos_r[1],current_pos_r1[1]],colors[r]+'-',linewidth=2,clip_on=False)
-        
+        # fed graph inputs for optimization
         file1 = open("graph.g2o","w")
         for r1 in range(No_Of_Robots):
             file1.write("VERTEX_SE2 "+str(r1)+" "+str(total_original_tragectory[i][r1][0])+" "+    str(total_original_tragectory[i][r1][1])+"\n")
         for r1 in range(No_Of_Robots):
             file1.write("EDGE_SE2 "+str(r)+" "+str(r1)+" "+str(current_pos_r[0])+" "+str(current_pos_r[1])+" "+    str(total_original_tragectory[i][r1][0])+" "+    str(total_original_tragectory[i][r1][1])+" "+str(graph[r][r1])+"\n")
         file1.close()
-
+        # call optimizer
         solver = g2o.BlockSolverSE2(g2o.LinearSolverEigenSE2())
         solver = g2o.OptimizationAlgorithmLevenberg(solver)
 
@@ -193,10 +201,10 @@ for i in range(No_Of_Iterations):
 
         optimizer.initialize_optimization()
         optimizer.optimize(args.max_iterations)
-
+        # saving optimized graph
         if len(args.output) > 0:
             optimizer.save(args.output)
-        
+        # Terrain raltive naviagtion simualtion for comparison
         positions =[]
         errors=[]
         weights =[]
