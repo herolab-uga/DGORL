@@ -43,14 +43,24 @@ You can set following paramters in [script](graph_optimization_mrl.py):
 4. number of max_iterations for optimizer
 5. dampting factory for optimizer
 
+## Core contributors
+
+* **Ehsan Latif** - PhD student
+
+* **Dr.Ramviyas Parasuraman** - Principal Investigator
+
+
 ## Heterogeneous Robotics (HeRoLab)
 
-This research work is conducted and owned by Heterogeneous Robotics Research Lab (HeRoLab) of the University of Georgia and 
+**Heterogeneous Robotics Lab (HeRoLab), Department of Computer Science, University of Georgia.** http://hero.uga.edu 
 
-Please contact hero at uga . edu for any queries
+For further information, contact Ehsan Latif ehsan.latif@uga.edu or Prof. Ramviyas Parasuraman ramviyas@uga.edu
 
 http://hero.uga.edu/
 
 <p align="center">
 <img src="http://hero.uga.edu/wp-content/uploads/2021/04/herolab_newlogo_whitebg.png" width="300">
 </p>
+
+
+
