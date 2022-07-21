@@ -47,7 +47,7 @@ You can set following paramters in [script](graph_optimization_mrl.py):
 
 * **Ehsan Latif** - PhD student
 
-* **Dr.Ramviyas Parasuraman** - Principal Investigator
+* **Dr. Ramviyas Parasuraman** - Principal Investigator
 
 
 ## Heterogeneous Robotics (HeRoLab)
