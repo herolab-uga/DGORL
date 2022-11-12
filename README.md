@@ -6,6 +6,13 @@ By creating relative position-weighted connectivity graphs using RSSI as local s
 
 ![Overview](/figures/graph_mrl_overview.png)
 
+### Demonstration of DGROL implementation on real robots: Here, five swarm robots are executing a simple multi-robot rendezvous algorithm to group together. The left side shows the robot's overhead video, the center plot shows the actual trajectory based on AprilTag tracking, the right plot shows the DGROL's localization (with Graph) outcome.
+
+<p align="center">
+<img src="https://github.com/herolab-uga/DGORL/blob/main/figures/graph_mrl_overview.png" width="600">
+</p>
+
+
 ## Requirements
 * C++ requirements.   
 ([pybind11](https://github.com/pybind/pybind11) is also required, but it's built in this repository, you don't need to install)
