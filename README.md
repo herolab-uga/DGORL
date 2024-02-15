@@ -14,9 +14,11 @@ By creating relative position-weighted connectivity graphs using RSSI as local s
 
 ## Paper Citation
 If you use this work in your research, please cite it as 
-Latif, Ehsan, and Parasuraman, Ramviyas. "DGORL: Distributed Graph Optimization based Relative Localization of Multi-Robot Systems." In Distributed Autonomous Robotic Systems (DARS), Nov. 2022. (Forthcoming Conference)
+Latif, E., Parasuraman, R. (2024). DGORL: Distributed Graph Optimization Based Relative Localization of Multi-robot Systems. In: Bourgeois, J., et al. Distributed Autonomous Robotic Systems. DARS 2022. Springer Proceedings in Advanced Robotics, vol 28. Springer, Cham. https://doi.org/10.1007/978-3-031-51497-5_18
 
-Preprint of the paper is available in ARXiv at https://arxiv.org/abs/2210.01662
+Paper Link: https://link.springer.com/chapter/10.1007/978-3-031-51497-5_18
+
+The preprint of the paper is available in ARXiv at https://arxiv.org/abs/2210.01662
 
 ## Installation Requirements
 * C++ requirements.   
@@ -68,7 +70,7 @@ You can set following paramters in [script](graph_optimization_mrl.py):
 
 For further information, contact Ehsan Latif ehsan.latif@uga.edu or Prof. Ramviyas Parasuraman ramviyas@uga.edu
 
-http://hero.uga.edu/
+https://hero.uga.edu/
 
 <p align="center">
 <img src="http://hero.uga.edu/wp-content/uploads/2021/04/herolab_newlogo_whitebg.png" width="300">
